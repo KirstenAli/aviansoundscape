@@ -10,13 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Getter @Setter
-public class FileProcessor {
-
-    private String directoryPath;
-
-    public FileProcessor(String directoryPath) {
-        this.directoryPath = directoryPath;
-    }
+public class TrainingSetBuilder {
 
     public static TrainingSet buildTrainingSet(String directoryPath){
 

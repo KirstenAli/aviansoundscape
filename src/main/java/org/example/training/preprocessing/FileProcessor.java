@@ -1,22 +1,52 @@
 package org.example.training.preprocessing;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class FileReader {
+@Getter @Setter
+public class FileProcessor {
 
-    private final String directoryPath;
+    private String directoryPath;
 
-    public FileReader(String directoryPath) {
+    public FileProcessor(String directoryPath) {
         this.directoryPath = directoryPath;
     }
 
-    private
+    public static TrainingSet buildTrainingSet(String directoryPath){
 
-    private static byte[] readFileBytes(String filePath) throws IOException {
-        Path path = Paths.get(filePath);
-        return Files.readAllBytes(path);
+        var directory = new File(directoryPath);
+        var fileNames = directory.list();
+        var trainingSet = new TrainingSet();
+
+        if(fileNames!=null) {
+            for(String fileName : fileNames) {
+                var row = new Row();
+
+                row.setPreInputs(fileToByteArray(fileName));
+                row.setOutputs(new double[]{Double.parseDouble(fileName)});
+
+                trainingSet.add(row);
+            }
+        }
+
+        return trainingSet.buildInputs();
     }
+
+    private static byte[] fileToByteArray(String filePath)  {
+        Path path = Paths.get(filePath);
+
+        try {
+            return Files.readAllBytes(path);
+        }
+        catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

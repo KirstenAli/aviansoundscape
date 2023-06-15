@@ -1,2 +1,24 @@
-package org.example.training.preprocessing;public class Row {
+package org.example.training.preprocessing;
+
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
+public class Row {
+
+    @Setter(AccessLevel.NONE)
+    private byte[] preInputs;
+
+    @Setter(AccessLevel.NONE)
+    private int preInputLength;
+
+    private double[] inputs;
+
+    private double[] outputs;
+
+    public void setPreInputs(byte[] preInputs) {
+        this.preInputs = preInputs;
+        preInputLength = preInputs.length;
+    }
 }

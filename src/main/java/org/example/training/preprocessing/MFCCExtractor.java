@@ -33,10 +33,8 @@ public class MFCCExtractor{
             // Compute MFCC features
             MFCC mfcc = new MFCC(samplesPerFrame, (int) audioFormat.getSampleRate());
             dispatcher.addAudioProcessor(mfcc);
-
             // Process the audio file
             dispatcher.run();
-
             mfccResults = mfcc.getMFCC();
         }
 

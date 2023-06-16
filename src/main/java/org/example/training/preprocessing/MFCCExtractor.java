@@ -13,7 +13,9 @@ import java.io.IOException;
 
 public class MFCCExtractor {
 
-    public static float[] extractMFCC(String filePath){
+    public static float[] extractMFCC(String filePath, int audioBufferSize,
+                                      int samplesPerFrame, int bufferOverlap,
+                                      boolean signed, boolean bigEndian){
 
         var mfccResults = new float[0];
 
@@ -23,13 +25,14 @@ public class MFCCExtractor {
             TarsosDSPAudioFormat audioFormat = new TarsosDSPAudioFormat(audioInputStream.getFormat().getSampleRate(),
                     audioInputStream.getFormat().getSampleSizeInBits(),
                     audioInputStream.getFormat().getChannels(),
-                    true,
-                    false);
+                    signed, bigEndian);
+
             TarsosDSPAudioInputStream audioStream = new JVMAudioInputStream(audioInputStream);
-            AudioDispatcher dispatcher = new AudioDispatcher(audioStream, 1024, 0);
+
+            AudioDispatcher dispatcher = new AudioDispatcher(audioStream, audioBufferSize, bufferOverlap);
 
             // Compute MFCC features
-            MFCC mfcc = new MFCC(1024, (int) audioFormat.getSampleRate());
+            MFCC mfcc = new MFCC(samplesPerFrame, (int) audioFormat.getSampleRate());
             dispatcher.addAudioProcessor(mfcc);
 
             // Process the audio file
@@ -38,10 +41,16 @@ public class MFCCExtractor {
             mfccResults = mfcc.getMFCC();
         }
 
-        catch (UnsupportedAudioFileException | IOException e) {
+        catch (UnsupportedAudioFileException | IOException e){
             e.printStackTrace();
         }
 
         return mfccResults;
+    }
+
+    public static float[] extractMFCC(String filePath){
+        return extractMFCC(filePath, 1024,
+                1024, 0,
+                true, false);
     }
 }

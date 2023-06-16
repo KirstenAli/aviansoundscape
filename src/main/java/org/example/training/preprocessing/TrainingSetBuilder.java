@@ -4,10 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Getter @Setter
 public class TrainingSetBuilder {
@@ -26,7 +22,7 @@ public class TrainingSetBuilder {
             for(String fileName : fileNames) {
                 var row = new Row();
 
-                row.setPreInputs(fileToByteArray(directoryPath+ "/" +fileName));
+                row.setPreInputs(MFCCExtractor.extractMFCC(directoryPath+ "/" +fileName));
 
                 var realFileName = fileName.split("\\.");
                 var output = Double.parseDouble(realFileName[0])/labelDivider;
@@ -55,16 +51,4 @@ public class TrainingSetBuilder {
     private double[] buildOutputArray(String fileName){
         return new double[]{1};
     }
-
-    private static byte[] fileToByteArray(String filePath)  {
-        Path path = Paths.get(filePath);
-
-        try {
-            return Files.readAllBytes(path);
-        }
-        catch(IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }

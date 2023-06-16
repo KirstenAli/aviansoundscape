@@ -24,7 +24,7 @@ public class TrainingSet {
 
     public TrainingSet buildInputs(){
         for(Row row: rows){
-            var input = convertByteArrayToDoubleArray(row.getPreInputs(), longestInput);
+            var input = convertFloatArrayToDoubleArray(row.getPreInputs(), longestInput);
 
             row.setInputs(input);
         }
@@ -32,11 +32,11 @@ public class TrainingSet {
         return this;
     }
 
-    private static double[] convertByteArrayToDoubleArray(byte[] byteArray, int length) {
+    private static double[] convertFloatArrayToDoubleArray(float[] floatArray, int length) {
         double[] doubleArray = new double[length];
 
-        for (int i = 0; i <byteArray.length; i++) {
-            doubleArray[i] = byteArray[i];
+        for (int i = 0; i <floatArray.length; i++) {
+            doubleArray[i] = floatArray[i];
         }
 
         return doubleArray;

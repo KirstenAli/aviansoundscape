@@ -10,22 +10,24 @@ import java.util.Arrays;
 
 public class Train {
 
-    public static void train(String dataPath){
-        var trainingSet = TrainingSetBuilder.buildTrainingSet(dataPath, 100);
+    public static void train(String dataPath, int hiddenNeurons){
+        var trainingSet = TrainingSetBuilder.buildTrainingSet(dataPath);
+        var outputSize = trainingSet.getRows().get(0).getOutputs().length;
         var longestInput = trainingSet.getLongestInput();
-        var dataSet = getDataSet(trainingSet);
+
+        var dataSet = getDataSet(trainingSet, outputSize);
 
         MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID,
-                longestInput, longestInput-1, 1);
+                longestInput, hiddenNeurons, outputSize);
 
         myMlPerceptron.learn(dataSet);
 
         testNeuralNetwork(myMlPerceptron, dataSet);
     }
 
-    private static DataSet getDataSet(TrainingSet trainingSet){
+    private static DataSet getDataSet(TrainingSet trainingSet, int outputSize){
 
-        DataSet dataSet = new DataSet(trainingSet.getLongestInput(), 1);
+        DataSet dataSet = new DataSet(trainingSet.getLongestInput(), outputSize);
 
         for(Row row: trainingSet.getRows()){
             dataSet.add(row.getInputs(), row.getOutputs());

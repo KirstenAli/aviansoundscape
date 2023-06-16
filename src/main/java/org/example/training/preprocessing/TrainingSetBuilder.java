@@ -9,11 +9,7 @@ import java.io.File;
 public class TrainingSetBuilder {
 
     private static TrainingSet constructTrainingSet(String directoryPath,
-                                                    int labelDivider,
                                                     TrainingSet trainingSet){
-
-        if(labelDivider%10 != 0)
-            throw new RuntimeException("Label divider must be a multiple of 10");
 
         var directory = new File(directoryPath);
         var fileNames = directory.list();
@@ -24,9 +20,8 @@ public class TrainingSetBuilder {
 
                 row.setPreInputs(MFCCExtractor.extractMFCC(directoryPath+ "/" +fileName));
 
-                var realFileName = fileName.split("\\.");
-                var output = Double.parseDouble(realFileName[0])/labelDivider;
-                row.setOutputs(new double[]{output});
+                var output = buildOutputArray(fileName, fileNames.length);
+                row.setOutputs(output);
 
                 trainingSet.add(row);
             }
@@ -36,19 +31,24 @@ public class TrainingSetBuilder {
     }
 
     public static TrainingSet buildTrainingSet(String directoryPath,
-                                               int labelDivider,
                                                int longestInput) {
         var trainingSet = new TrainingSet();
         trainingSet.setLongestInput(longestInput);
 
-        return constructTrainingSet(directoryPath, labelDivider, trainingSet);
+        return constructTrainingSet(directoryPath, trainingSet);
     }
 
-    public static TrainingSet buildTrainingSet(String directoryPath, int labelDivider) {
-        return constructTrainingSet(directoryPath, labelDivider, new TrainingSet());
+    public static TrainingSet buildTrainingSet(String directoryPath) {
+        return constructTrainingSet(directoryPath, new TrainingSet());
     }
 
-    private double[] buildOutputArray(String fileName){
-        return new double[]{1};
+    private static double[] buildOutputArray(String fileName, int numOfFiles){
+        var realFileName = fileName.split("\\.");
+        var num = Integer.parseInt(realFileName[0]);
+
+        var output = new double[numOfFiles];
+        output[num-1] = 1;
+
+        return output;
     }
 }

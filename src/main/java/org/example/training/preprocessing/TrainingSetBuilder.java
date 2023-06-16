@@ -12,24 +12,48 @@ import java.nio.file.Paths;
 @Getter @Setter
 public class TrainingSetBuilder {
 
-    public static TrainingSet buildTrainingSet(String directoryPath){
+    private static TrainingSet constructTrainingSet(String directoryPath,
+                                                    int labelDivider,
+                                                    TrainingSet trainingSet){
+
+        if(labelDivider%10 != 0)
+            throw new RuntimeException("Label divider must be a multiple of 10");
 
         var directory = new File(directoryPath);
         var fileNames = directory.list();
-        var trainingSet = new TrainingSet();
 
         if(fileNames!=null) {
             for(String fileName : fileNames) {
                 var row = new Row();
 
-                row.setPreInputs(fileToByteArray(fileName));
-                row.setOutputs(new double[]{Double.parseDouble(fileName)});
+                row.setPreInputs(fileToByteArray(directoryPath+ "/" +fileName));
+
+                var realFileName = fileName.split("\\.");
+                var output = Double.parseDouble(realFileName[0])/labelDivider;
+                row.setOutputs(new double[]{output});
 
                 trainingSet.add(row);
             }
         }
 
         return trainingSet.buildInputs();
+    }
+
+    public static TrainingSet buildTrainingSet(String directoryPath,
+                                               int labelDivider,
+                                               int longestInput) {
+        var trainingSet = new TrainingSet();
+        trainingSet.setLongestInput(longestInput);
+
+        return constructTrainingSet(directoryPath, labelDivider, trainingSet);
+    }
+
+    public static TrainingSet buildTrainingSet(String directoryPath, int labelDivider) {
+        return constructTrainingSet(directoryPath, labelDivider, new TrainingSet());
+    }
+
+    private double[] buildOutputArray(String fileName){
+        return new double[]{1};
     }
 
     private static byte[] fileToByteArray(String filePath)  {

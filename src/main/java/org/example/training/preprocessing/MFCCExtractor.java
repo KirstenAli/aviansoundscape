@@ -11,8 +11,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 
-public class MFCCExtractor {
-
+public class MFCCExtractor{
     public static float[] extractMFCC(String filePath, int audioBufferSize,
                                       int samplesPerFrame, int bufferOverlap,
                                       boolean signed, boolean bigEndian){

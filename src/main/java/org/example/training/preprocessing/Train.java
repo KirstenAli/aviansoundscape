@@ -4,16 +4,17 @@ import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.core.data.DataSetRow;
 import org.neuroph.nnet.MultiLayerPerceptron;
+import org.neuroph.nnet.learning.BackPropagation;
 import org.neuroph.util.TransferFunctionType;
 
 import java.util.Arrays;
 
 public class Train {
 
-    private static MultiLayerPerceptron train(TransferFunctionType functionType, int inputNeurons,
-                                              int hiddenNeurons, int outputNeurons, DataSet dataSet){
+    private static NeuralNetwork<BackPropagation> train(TransferFunctionType functionType, int inputNeurons,
+                                                        int hiddenNeurons, int outputNeurons, DataSet dataSet){
 
-        MultiLayerPerceptron multiLayerPerceptron = new MultiLayerPerceptron(functionType,
+        NeuralNetwork<BackPropagation> multiLayerPerceptron = new MultiLayerPerceptron(functionType,
                 inputNeurons, hiddenNeurons, outputNeurons);
 
         multiLayerPerceptron.learn(dataSet);
@@ -35,7 +36,7 @@ public class Train {
         testNeuralNetwork(trainedNetwork, dataSet);
     }
 
-    private static void testNeuralNetwork(NeuralNetwork network, DataSet testSet) {
+    private static void testNeuralNetwork(NeuralNetwork<BackPropagation> network, DataSet testSet) {
 
         for(DataSetRow dataRow : testSet.getRows()) {
             var input = dataRow.getInput();

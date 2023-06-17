@@ -10,14 +10,16 @@ import java.util.Arrays;
 
 public class Train {
 
-    public static void train(String dataPath, int hiddenNeurons){
+    public static void train(String dataPath, int hiddenNeurons,
+                             TransferFunctionType functionType){
+
         var trainingSet = TrainingSetBuilder.buildTrainingSet(dataPath);
         var outputSize = trainingSet.getRows().get(0).getOutputs().length;
         var longestInput = trainingSet.getLongestInput();
 
-        var dataSet = getDataSet(trainingSet, outputSize);
+        var dataSet = buildDataSet(trainingSet, outputSize);
 
-        MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID,
+        MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(functionType,
                 longestInput, hiddenNeurons, outputSize);
 
         myMlPerceptron.learn(dataSet);
@@ -25,7 +27,7 @@ public class Train {
         testNeuralNetwork(myMlPerceptron, dataSet);
     }
 
-    private static DataSet getDataSet(TrainingSet trainingSet, int outputSize){
+    private static DataSet buildDataSet(TrainingSet trainingSet, int outputSize){
 
         DataSet dataSet = new DataSet(trainingSet.getLongestInput(), outputSize);
 

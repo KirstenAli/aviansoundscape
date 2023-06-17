@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class Train {
 
     private static MultiLayerPerceptron train(TransferFunctionType functionType, int inputNeurons,
-                                                        int hiddenNeurons, int outputNeurons, DataSet dataSet){
+                                              int hiddenNeurons, int outputNeurons, DataSet dataSet){
 
         MultiLayerPerceptron multiLayerPerceptron = new MultiLayerPerceptron(functionType,
                 inputNeurons, hiddenNeurons, outputNeurons);

@@ -25,7 +25,7 @@ public class Train {
                              TransferFunctionType functionType){
 
         var trainingSet = TrainingSetBuilder.buildTrainingSet(dataPath);
-        var outputSize = trainingSet.getRows().get(0).getOutputs().length;
+        var outputSize = getOutputSize(trainingSet);
         var longestInput = trainingSet.getLongestInput();
 
         var dataSet = buildDataSet(trainingSet, outputSize);
@@ -33,6 +33,10 @@ public class Train {
         var trainedNetwork = train(functionType, longestInput, hiddenNeurons, outputSize, dataSet);
 
         testNeuralNetwork(trainedNetwork, dataSet);
+    }
+
+    private static int getOutputSize(TrainingSet trainingSet){
+        return trainingSet.getRows().get(0).getOutputs().length;
     }
 
     private static void testNeuralNetwork(NeuralNetwork network, DataSet testSet) {

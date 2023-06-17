@@ -19,12 +19,12 @@ public class Train {
 
         var dataSet = buildDataSet(trainingSet, outputSize);
 
-        MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(functionType,
+        MultiLayerPerceptron multiLayerPerceptron = new MultiLayerPerceptron(functionType,
                 longestInput, hiddenNeurons, outputSize);
 
-        myMlPerceptron.learn(dataSet);
+        multiLayerPerceptron.learn(dataSet);
 
-        testNeuralNetwork(myMlPerceptron, dataSet);
+        testNeuralNetwork(multiLayerPerceptron, dataSet);
     }
 
     private static DataSet buildDataSet(TrainingSet trainingSet, int outputSize){

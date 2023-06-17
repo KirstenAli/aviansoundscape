@@ -10,7 +10,18 @@ import java.util.Arrays;
 
 public class Train {
 
-    public static void train(String dataPath, int hiddenNeurons,
+    private static MultiLayerPerceptron train(TransferFunctionType functionType, int inputNeurons,
+                                              int hiddenNeurons, int outputNeurons, DataSet dataSet){
+
+        MultiLayerPerceptron multiLayerPerceptron = new MultiLayerPerceptron(functionType,
+                inputNeurons, hiddenNeurons, outputNeurons);
+
+        multiLayerPerceptron.learn(dataSet);
+
+        return multiLayerPerceptron;
+    }
+
+    public static void start(String dataPath, int hiddenNeurons,
                              TransferFunctionType functionType){
 
         var trainingSet = TrainingSetBuilder.buildTrainingSet(dataPath);
@@ -19,26 +30,12 @@ public class Train {
 
         var dataSet = buildDataSet(trainingSet, outputSize);
 
-        MultiLayerPerceptron multiLayerPerceptron = new MultiLayerPerceptron(functionType,
-                longestInput, hiddenNeurons, outputSize);
+        var trainedNetwork = train(functionType, longestInput, hiddenNeurons, outputSize, dataSet);
 
-        multiLayerPerceptron.learn(dataSet);
-
-        testNeuralNetwork(multiLayerPerceptron, dataSet);
+        testNeuralNetwork(trainedNetwork, dataSet);
     }
 
-    private static DataSet buildDataSet(TrainingSet trainingSet, int outputSize){
-
-        DataSet dataSet = new DataSet(trainingSet.getLongestInput(), outputSize);
-
-        for(Row row: trainingSet.getRows()){
-            dataSet.add(row.getInputs(), row.getOutputs());
-        }
-
-        return dataSet;
-    }
-
-    public static void testNeuralNetwork(NeuralNetwork network, DataSet testSet) {
+    private static void testNeuralNetwork(NeuralNetwork network, DataSet testSet) {
 
         for(DataSetRow dataRow : testSet.getRows()) {
             var input = dataRow.getInput();
@@ -51,5 +48,16 @@ public class Train {
             System.out.println(" Output: " + Arrays.toString(networkOutput) );
         }
 
+    }
+
+    private static DataSet buildDataSet(TrainingSet trainingSet, int outputSize){
+
+        DataSet dataSet = new DataSet(trainingSet.getLongestInput(), outputSize);
+
+        for(Row row: trainingSet.getRows()){
+            dataSet.add(row.getInputs(), row.getOutputs());
+        }
+
+        return dataSet;
     }
 }

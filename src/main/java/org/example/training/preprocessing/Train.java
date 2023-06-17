@@ -4,22 +4,21 @@ import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.core.data.DataSetRow;
 import org.neuroph.nnet.MultiLayerPerceptron;
-import org.neuroph.nnet.learning.BackPropagation;
 import org.neuroph.util.TransferFunctionType;
 
 import java.util.Arrays;
 
 public class Train {
 
-    private static NeuralNetwork<BackPropagation> train(TransferFunctionType functionType, int inputNeurons,
+    private static MultiLayerPerceptron train(TransferFunctionType functionType, int inputNeurons,
                                                         int hiddenNeurons, int outputNeurons, DataSet dataSet){
 
-        NeuralNetwork<BackPropagation> network = new MultiLayerPerceptron(functionType,
+        MultiLayerPerceptron multiLayerPerceptron = new MultiLayerPerceptron(functionType,
                 inputNeurons, hiddenNeurons, outputNeurons);
 
-        network.learn(dataSet);
+        multiLayerPerceptron.learn(dataSet);
 
-        return network;
+        return multiLayerPerceptron;
     }
 
     public static void start(String dataPath, int hiddenNeurons,

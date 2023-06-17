@@ -9,18 +9,6 @@ import org.neuroph.util.TransferFunctionType;
 import java.util.Arrays;
 
 public class Train {
-
-    private static MultiLayerPerceptron train(TransferFunctionType functionType, int inputNeurons,
-                                              int hiddenNeurons, int outputNeurons, DataSet dataSet){
-
-        MultiLayerPerceptron multiLayerPerceptron = new MultiLayerPerceptron(functionType,
-                inputNeurons, hiddenNeurons, outputNeurons);
-
-        multiLayerPerceptron.learn(dataSet);
-
-        return multiLayerPerceptron;
-    }
-
     public static void start(String dataPath, int hiddenNeurons,
                              TransferFunctionType functionType){
 
@@ -33,6 +21,17 @@ public class Train {
         var trainedNetwork = train(functionType, longestInput, hiddenNeurons, outputSize, dataSet);
 
         testNeuralNetwork(trainedNetwork, dataSet);
+    }
+
+    private static MultiLayerPerceptron train(TransferFunctionType functionType, int inputNeurons,
+                                              int hiddenNeurons, int outputNeurons, DataSet dataSet){
+
+        MultiLayerPerceptron multiLayerPerceptron = new MultiLayerPerceptron(functionType,
+                inputNeurons, hiddenNeurons, outputNeurons);
+
+        multiLayerPerceptron.learn(dataSet);
+
+        return multiLayerPerceptron;
     }
 
     private static int getOutputSize(TrainingSet trainingSet){

@@ -8,7 +8,7 @@ import org.neuroph.util.TransferFunctionType;
 
 import java.util.Arrays;
 
-public class Train {
+public class Train{
     public static void start(String dataPath, int hiddenNeurons,
                              TransferFunctionType functionType){
 

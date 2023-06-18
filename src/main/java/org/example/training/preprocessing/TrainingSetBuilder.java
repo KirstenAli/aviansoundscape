@@ -20,14 +20,14 @@ public class TrainingSetBuilder {
 
                 row.setPreInputs(MFCCExtractor.extractMFCC(directoryPath+ "/" +fileName));
 
-                var output = buildOutputArray(fileName, fileNames.length);
-                row.setOutputs(output);
+                var className = getClassNum(fileName);
+                row.setClassNum(className);
 
                 trainingSet.add(row);
             }
         }
 
-        return trainingSet.buildInputs();
+        return trainingSet.build();
     }
 
     public static TrainingSet buildTrainingSet(String directoryPath,
@@ -42,13 +42,8 @@ public class TrainingSetBuilder {
         return constructTrainingSet(directoryPath, new TrainingSet());
     }
 
-    private static double[] buildOutputArray(String fileName, int numOfFiles){
+    private static int getClassNum(String fileName){
         var realFileName = fileName.split("\\.");
-        var num = Integer.parseInt(realFileName[0]);
-
-        var output = new double[numOfFiles];
-        output[num-1] = 1;
-
-        return output;
+        return Integer.parseInt(realFileName[0]);
     }
 }

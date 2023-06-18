@@ -9,8 +9,8 @@ import org.neuroph.util.TransferFunctionType;
 import java.util.Arrays;
 
 public class Train{
-    public static void start(String dataPath, int hiddenNeurons,
-                             TransferFunctionType functionType){
+    public static void start(String dataPath, String testDataPath,
+                             int hiddenNeurons, TransferFunctionType functionType){
 
         var trainingSet = TrainingSetBuilder.buildTrainingSet(dataPath);
         var outputSize = getOutputSize(trainingSet);
@@ -20,7 +20,10 @@ public class Train{
 
         var trainedNetwork = train(functionType, longestInput, hiddenNeurons, outputSize, dataSet);
 
-        testNeuralNetwork(trainedNetwork, dataSet);
+        var testSet = TrainingSetBuilder.buildTrainingSet(testDataPath, longestInput);
+        var testDataSet = buildDataSet(testSet, outputSize);
+
+        testNeuralNetwork(trainedNetwork, testDataSet);
     }
 
     private static MultiLayerPerceptron train(TransferFunctionType functionType, int inputNeurons,

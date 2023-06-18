@@ -17,6 +17,8 @@ public class Row {
 
     private double[] outputs;
 
+    private int classNum;
+
     public void setPreInputs(float[] preInputs) {
         this.preInputs = preInputs;
         preInputLength = preInputs.length;

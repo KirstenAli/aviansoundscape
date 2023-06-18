@@ -16,18 +16,18 @@ public class Train{
 
         var dataSet = buildDataSet(dataPath, mfccExtractor);
 
-        var longestInput = dataSet.getInputSize();
-        var outputSize = dataSet.getOutputSize();
-
-        var trainedNetwork = train(functionType, longestInput, hiddenNeurons, outputSize, dataSet);
+        var trainedNetwork = train(functionType, hiddenNeurons, dataSet);
 
         var testDataSet = buildDataSet(testDataPath, mfccExtractor);
 
         testNeuralNetwork(trainedNetwork, testDataSet);
     }
 
-    private static MultiLayerPerceptron train(TransferFunctionType functionType, int inputNeurons,
-                                              int hiddenNeurons, int outputNeurons, DataSet dataSet){
+    private static MultiLayerPerceptron train(TransferFunctionType functionType,
+                                              int hiddenNeurons, DataSet dataSet){
+
+        var inputNeurons = dataSet.getInputSize();
+        var outputNeurons = dataSet.getOutputSize();
 
         MultiLayerPerceptron multiLayerPerceptron = new MultiLayerPerceptron(functionType,
                 inputNeurons, hiddenNeurons, outputNeurons);

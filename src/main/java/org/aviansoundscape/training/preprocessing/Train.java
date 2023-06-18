@@ -18,7 +18,7 @@ public class Train{
 
         var trainedNetwork = train(functionType, hiddenNeurons, dataSet);
 
-        var testDataSet = buildTestDataSet(testDataPath, dataSet.getInputSize(), mfccExtractor);
+        var testDataSet = buildDataSet(testDataPath, dataSet.getInputSize(), mfccExtractor);
 
         testNeuralNetwork(trainedNetwork, testDataSet);
     }
@@ -66,7 +66,7 @@ public class Train{
         return buildSet(trainingSet, trainingSet.getLongestInput());
     }
 
-    private static DataSet buildTestDataSet(String dataPath, int longestInput,
+    private static DataSet buildDataSet(String dataPath, int longestInput,
                                         FileProcessor fileProcessor){
 
         var trainingSet = new TrainingSetBuilder()

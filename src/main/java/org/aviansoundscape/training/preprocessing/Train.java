@@ -45,7 +45,7 @@ public class Train{
 
     private static void testNeuralNetwork(NeuralNetwork network, DataSet testSet) {
 
-        for(DataSetRow dataRow : testSet.getRows()) {
+        for(DataSetRow dataRow : testSet.getRows()){
             var input = dataRow.getInput();
 
             network.setInput(input);

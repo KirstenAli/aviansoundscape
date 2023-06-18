@@ -12,7 +12,11 @@ public class Train{
     public static void start(String dataPath, String testDataPath,
                              int hiddenNeurons, TransferFunctionType functionType){
 
-        var trainingSet = TrainingSetBuilder.buildTrainingSet(dataPath);
+        var mfccExtractor = new MFCCExtractor();
+
+        var trainingSet = new TrainingSetBuilder()
+                .buildTrainingSet(dataPath, mfccExtractor);
+
         var outputSize = getOutputSize(trainingSet);
         var longestInput = trainingSet.getLongestInput();
 
@@ -20,7 +24,9 @@ public class Train{
 
         var trainedNetwork = train(functionType, longestInput, hiddenNeurons, outputSize, dataSet);
 
-        var testSet = TrainingSetBuilder.buildTrainingSet(testDataPath, longestInput);
+        var testSet = new TrainingSetBuilder()
+                .buildTrainingSet(testDataPath, longestInput, mfccExtractor);
+
         var testDataSet = buildDataSet(testSet, outputSize);
 
         testNeuralNetwork(trainedNetwork, testDataSet);
@@ -31,6 +37,8 @@ public class Train{
 
         MultiLayerPerceptron multiLayerPerceptron = new MultiLayerPerceptron(functionType,
                 inputNeurons, hiddenNeurons, outputNeurons);
+
+        multiLayerPerceptron.setLearningRule(new MyBackPropagation());
 
         multiLayerPerceptron.learn(dataSet);
 

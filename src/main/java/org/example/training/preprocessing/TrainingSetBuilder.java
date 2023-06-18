@@ -8,8 +8,9 @@ import java.io.File;
 @Getter @Setter
 public class TrainingSetBuilder {
 
-    private static TrainingSet constructTrainingSet(String directoryPath,
-                                                    TrainingSet trainingSet){
+    private TrainingSet constructTrainingSet(String directoryPath,
+                                             TrainingSet trainingSet,
+                                             FileProcessor fileProcessor){
 
         var directory = new File(directoryPath);
         var fileNames = directory.list();
@@ -17,8 +18,10 @@ public class TrainingSetBuilder {
         if(fileNames!=null) {
             for(String fileName : fileNames) {
                 var row = new Row();
+                var preInputs = fileProcessor
+                        .processFile(directoryPath+"/"+fileName);
 
-                row.setPreInputs(MFCCExtractor.extractMFCC(directoryPath+ "/" +fileName));
+                row.setPreInputs(preInputs);
 
                 var className = getClassNum(fileName);
                 row.setClassNum(className);
@@ -30,19 +33,22 @@ public class TrainingSetBuilder {
         return trainingSet.build();
     }
 
-    public static TrainingSet buildTrainingSet(String directoryPath,
-                                               int longestInput) {
+    public TrainingSet buildTrainingSet(String directoryPath,
+                                        int longestInput,
+                                        FileProcessor fileProcessor)
+    {
         var trainingSet = new TrainingSet();
         trainingSet.setLongestInput(longestInput);
 
-        return constructTrainingSet(directoryPath, trainingSet);
+        return constructTrainingSet(directoryPath, trainingSet, fileProcessor);
     }
 
-    public static TrainingSet buildTrainingSet(String directoryPath) {
-        return constructTrainingSet(directoryPath, new TrainingSet());
+    public TrainingSet buildTrainingSet(String directoryPath,
+                                        FileProcessor fileProcessor) {
+        return constructTrainingSet(directoryPath, new TrainingSet(), fileProcessor);
     }
 
-    private static int getClassNum(String fileName){
+    private int getClassNum(String fileName){
         var realFileName = fileName.split("\\.");
         return Integer.parseInt(realFileName[0]);
     }

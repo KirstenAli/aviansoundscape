@@ -14,20 +14,14 @@ public class Train{
 
         var mfccExtractor = new MFCCExtractor();
 
-        var trainingSet = new TrainingSetBuilder()
-                .buildTrainingSet(dataPath, mfccExtractor);
+        var dataSet = buildDataSet(dataPath, mfccExtractor);
 
-        var outputSize = getOutputSize(trainingSet);
-        var longestInput = trainingSet.getLongestInput();
-
-        var dataSet = buildDataSet(trainingSet, outputSize);
+        var longestInput = dataSet.getInputSize();
+        var outputSize = dataSet.getOutputSize();
 
         var trainedNetwork = train(functionType, longestInput, hiddenNeurons, outputSize, dataSet);
 
-        var testSet = new TrainingSetBuilder()
-                .buildTrainingSet(testDataPath, longestInput, mfccExtractor);
-
-        var testDataSet = buildDataSet(testSet, outputSize);
+        var testDataSet = buildDataSet(testDataPath, mfccExtractor);
 
         testNeuralNetwork(trainedNetwork, testDataSet);
     }
@@ -64,7 +58,13 @@ public class Train{
 
     }
 
-    private static DataSet buildDataSet(TrainingSet trainingSet, int outputSize){
+    private static DataSet buildDataSet(String dataPath,
+                                        FileProcessor fileProcessor){
+
+        var trainingSet = new TrainingSetBuilder()
+                .buildTrainingSet(dataPath, fileProcessor);
+
+        var outputSize = getOutputSize(trainingSet);
 
         DataSet dataSet = new DataSet(trainingSet.getLongestInput(), outputSize);
 

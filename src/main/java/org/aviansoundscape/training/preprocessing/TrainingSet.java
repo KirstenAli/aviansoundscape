@@ -26,7 +26,7 @@ public class TrainingSet {
         var maxClass = getMaxClass();
 
         for(Row row: rows){
-            var input = convertFloatArrayToDoubleArray(row.getPreInputs(), longestInput);
+            var input = buildInputs(row);
             var output = buildOutputArray(row, maxClass);
 
             row.setInputs(input);
@@ -34,6 +34,10 @@ public class TrainingSet {
         }
 
         return this;
+    }
+
+    private double[] buildInputs(Row row){
+        return convertFloatArrayToDoubleArray(row.getPreInputs(), longestInput);
     }
 
     private static double[] convertFloatArrayToDoubleArray(float[] floatArray, int length) {

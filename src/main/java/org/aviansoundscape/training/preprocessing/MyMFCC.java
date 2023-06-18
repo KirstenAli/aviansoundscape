@@ -1,4 +1,4 @@
-package org.example.training.preprocessing;
+package org.aviansoundscape.training.preprocessing;
 
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.mfcc.MFCC;

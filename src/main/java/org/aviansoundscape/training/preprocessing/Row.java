@@ -1,4 +1,4 @@
-package org.example.training.preprocessing;
+package org.aviansoundscape.training.preprocessing;
 
 import lombok.AccessLevel;
 import lombok.Getter;

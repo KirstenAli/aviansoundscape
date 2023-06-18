@@ -1,6 +1,6 @@
-package org.example;
+package org.aviansoundscape;
 
-import org.example.training.preprocessing.Train;
+import org.aviansoundscape.training.preprocessing.Train;
 import org.neuroph.util.TransferFunctionType;
 
 public class Main {

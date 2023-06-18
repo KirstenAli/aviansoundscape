@@ -35,8 +35,7 @@ public class TrainingSetBuilder {
 
     public TrainingSet buildTrainingSet(String directoryPath,
                                         int longestInput,
-                                        FileProcessor fileProcessor)
-    {
+                                        FileProcessor fileProcessor) {
         var trainingSet = new TrainingSet();
         trainingSet.setLongestInput(longestInput);
 

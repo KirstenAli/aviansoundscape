@@ -39,7 +39,9 @@ public class TrainingSet {
     private static double[] convertFloatArrayToDoubleArray(float[] floatArray, int length) {
         double[] doubleArray = new double[length];
 
-        for (int i = 0; i <floatArray.length; i++){
+        var floatArrayLength = Math.min(floatArray.length, length);
+
+        for (int i = 0; i <floatArrayLength; i++){
             doubleArray[i] = floatArray[i];
         }
 

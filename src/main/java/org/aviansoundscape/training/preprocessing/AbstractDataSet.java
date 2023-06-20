@@ -29,10 +29,10 @@ public abstract class AbstractDataSet {
     }
 
     private double[] buildInputs(Row row){
-        return convertFloatArrayToDoubleArray(row.getPreInputs(), longestInput);
+        return toDoubleArray(row.getPreInputs(), longestInput);
     }
 
-    private static double[] convertFloatArrayToDoubleArray(float[] floatArray, int length) {
+    private static double[] toDoubleArray(float[] floatArray, int length) {
         double[] doubleArray = new double[length];
 
         var floatArrayLength = Math.min(floatArray.length, length);

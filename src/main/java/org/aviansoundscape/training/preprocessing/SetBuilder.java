@@ -1,12 +1,9 @@
 package org.aviansoundscape.training.preprocessing;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.neuroph.core.data.DataSet;
 
 import java.io.File;
 
-@Getter @Setter
 public class SetBuilder {
 
     public static DataSet buildTestSet(String directoryPath,
@@ -27,8 +24,7 @@ public class SetBuilder {
                                        FileProcessor fileProcessor){
         var initialDataSet = new TrainingSet();
 
-        prepareInitialSet(dataPath, initialDataSet,
-                fileProcessor);
+        prepareInitialSet(dataPath, initialDataSet, fileProcessor);
 
         initialDataSet.build();
 

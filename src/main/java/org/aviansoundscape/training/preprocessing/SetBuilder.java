@@ -14,7 +14,7 @@ public class SetBuilder {
                                        FileProcessor fileProcessor){
         var testSet = new TestSet();
 
-        buildInitialSet(directoryPath, testSet, fileProcessor);
+        prepareInitialSet(directoryPath, testSet, fileProcessor);
 
         testSet.setLongestInput(longestInput);
 
@@ -27,7 +27,7 @@ public class SetBuilder {
                                        FileProcessor fileProcessor){
         var initialDataSet = new TrainingSet();
 
-        buildInitialSet(dataPath, initialDataSet,
+        prepareInitialSet(dataPath, initialDataSet,
                 fileProcessor);
 
         initialDataSet.build();
@@ -35,9 +35,9 @@ public class SetBuilder {
         return buildSet(initialDataSet, initialDataSet.getLongestInput());
     }
 
-    private static void buildInitialSet(String directoryPath,
-                                        AbstractDataSet abstractDataSet,
-                                        FileProcessor fileProcessor){
+    private static void prepareInitialSet(String directoryPath,
+                                          AbstractDataSet abstractDataSet,
+                                          FileProcessor fileProcessor){
 
         var directory = new File(directoryPath);
         var fileNames = directory.list();

@@ -46,23 +46,16 @@ public class SetBuilder {
         return buildSet(testSet, longestInput);
     }
 
-    private static TrainingSet buildInitialDataSet(String directoryPath,
-                                                       FileProcessor fileProcessor) {
+    public static DataSet buildDataSet(String dataPath,
+                                        FileProcessor fileProcessor){
         var initialDataSet = new TrainingSet();
 
-        buildInitialSet(directoryPath, initialDataSet,
+        buildInitialSet(dataPath, initialDataSet,
                 fileProcessor);
 
         initialDataSet.build();
 
-        return initialDataSet;
-    }
-
-    public static DataSet buildDataSet(String dataPath,
-                                        FileProcessor fileProcessor){
-        var trainingSet = buildInitialDataSet(dataPath, fileProcessor);
-
-        return buildSet(trainingSet, trainingSet.getLongestInput());
+        return buildSet(initialDataSet, initialDataSet.getLongestInput());
     }
 
     private static DataSet buildSet(AbstractDataSet abstractDataSet, int longestInput){

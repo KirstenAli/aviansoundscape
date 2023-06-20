@@ -7,7 +7,7 @@ import org.neuroph.core.data.DataSet;
 import java.io.File;
 
 @Getter @Setter
-public class DataSetBuilder {
+public class SetBuilder {
 
     private static void buildInitialSet(String directoryPath,
                                      AbstractDataSet abstractDataSet,

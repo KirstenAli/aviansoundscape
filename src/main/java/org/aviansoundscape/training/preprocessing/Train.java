@@ -14,11 +14,11 @@ public class Train{
 
         var mfccExtractor = new MFCCExtractor();
 
-        var dataSet = DataSetBuilder.buildDataSet(dataPath, mfccExtractor);
+        var dataSet = SetBuilder.buildDataSet(dataPath, mfccExtractor);
 
         var trainedNetwork = train(functionType, hiddenNeurons, dataSet);
 
-        var testDataSet = DataSetBuilder.buildTestSet(testDataPath,
+        var testDataSet = SetBuilder.buildTestSet(testDataPath,
                 dataSet.getInputSize(), mfccExtractor);
 
         testNeuralNetwork(trainedNetwork, testDataSet);

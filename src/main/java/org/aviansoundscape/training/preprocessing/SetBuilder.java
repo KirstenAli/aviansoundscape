@@ -38,6 +38,7 @@ public class SetBuilder {
     private static void buildInitialSet(String directoryPath,
                                         AbstractDataSet abstractDataSet,
                                         FileProcessor fileProcessor){
+
         var directory = new File(directoryPath);
         var fileNames = directory.list();
 

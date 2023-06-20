@@ -14,11 +14,12 @@ public class Train{
 
         var mfccExtractor = new MFCCExtractor();
 
-        var dataSet = buildDataSet(dataPath, mfccExtractor);
+        var dataSet = DataSetBuilder.buildDataSet(dataPath, mfccExtractor);
 
         var trainedNetwork = train(functionType, hiddenNeurons, dataSet);
 
-        var testDataSet = buildDataSet(testDataPath, dataSet.getInputSize(), mfccExtractor);
+        var testDataSet = DataSetBuilder.buildDataSet(testDataPath,
+                dataSet.getInputSize(), mfccExtractor);
 
         testNeuralNetwork(trainedNetwork, testDataSet);
     }
@@ -39,10 +40,6 @@ public class Train{
         return multiLayerPerceptron;
     }
 
-    private static int getOutputSize(TrainingSet trainingSet){
-        return trainingSet.getRows().get(0).getOutputs().length;
-    }
-
     private static void testNeuralNetwork(NeuralNetwork network, DataSet testSet) {
 
         for(DataSetRow dataRow : testSet.getRows()){
@@ -56,34 +53,5 @@ public class Train{
             System.out.println(" Output: " + Arrays.toString(networkOutput));
         }
 
-    }
-
-    private static DataSet buildDataSet(String dataPath,
-                                        FileProcessor fileProcessor){
-        var trainingSet = new TrainingSetBuilder()
-                .buildTrainingSet(dataPath, fileProcessor);
-
-        return buildSet(trainingSet, trainingSet.getLongestInput());
-    }
-
-    private static DataSet buildDataSet(String dataPath, int longestInput,
-                                        FileProcessor fileProcessor){
-
-        var trainingSet = new TrainingSetBuilder()
-                .buildTrainingSet(dataPath, longestInput, fileProcessor);
-
-        return buildSet(trainingSet, longestInput);
-    }
-
-    private static DataSet buildSet(TrainingSet trainingSet, int longestInput){
-        var outputSize = getOutputSize(trainingSet);
-
-        DataSet dataSet = new DataSet(longestInput, outputSize);
-
-        for(Row row: trainingSet.getRows()){
-            dataSet.add(row.getInputs(), row.getOutputs());
-        }
-
-        return dataSet;
     }
 }

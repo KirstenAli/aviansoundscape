@@ -4,7 +4,7 @@ import org.neuroph.core.data.DataSet;
 
 import java.io.File;
 
-public class SetBuilder {
+public class SetBuilder{
 
     public static DataSet buildTestSet(String directoryPath,
                                        int longestInput,

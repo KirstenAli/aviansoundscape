@@ -1,71 +1,12 @@
 package org.aviansoundscape.training.preprocessing;
 
-import lombok.Getter;
-import lombok.Setter;
+public class TrainingSet extends AbstractDataSet{
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Getter @Setter
-public class TrainingSet {
-    private final List<Row> rows;
-    private int longestInput;
-
-    public TrainingSet() {
-        rows = new ArrayList<>();
-    }
-
+    @Override
     public void add(Row row){
-        if(row.getPreInputLength() > longestInput)
-            longestInput = row.getPreInputLength();
+        if(row.getPreInputLength() > getLongestInput())
+            setLongestInput(row.getPreInputLength());
 
-        rows.add(row);
-    }
-
-    public TrainingSet build(){
-        var maxClass = getMaxClass();
-
-        for(Row row: rows){
-            var input = buildInputs(row);
-            var output = buildOutputArray(row, maxClass);
-
-            row.setInputs(input);
-            row.setOutputs(output);
-        }
-
-        return this;
-    }
-
-    private double[] buildInputs(Row row){
-        return convertFloatArrayToDoubleArray(row.getPreInputs(), longestInput);
-    }
-
-    private static double[] convertFloatArrayToDoubleArray(float[] floatArray, int length) {
-        double[] doubleArray = new double[length];
-
-        var floatArrayLength = Math.min(floatArray.length, length);
-
-        for (int i = 0; i <floatArrayLength; i++){
-            doubleArray[i] = floatArray[i];
-        }
-
-        return doubleArray;
-    }
-
-    private int getMaxClass(){
-        var maxClass=0;
-
-        for (Row row: rows){
-            if(row.getClassNum()>maxClass)
-                maxClass=row.getClassNum();
-        }
-        return maxClass;
-    }
-
-    private double[] buildOutputArray(Row row, int maxClass){
-        var output = new double[maxClass];
-        output[row.getClassNum()-1] = 1;
-
-        return output;
+        getRows().add(row);
     }
 }

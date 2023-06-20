@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class MFCCExtractor implements FileProcessor{
-    public static float[] extractMFCC(String filePath, int samplesPerFrame,
+    public static double[] extractMFCC(String filePath, int samplesPerFrame,
                                       int bufferOverlap, int amountOfCepstrumCoef,
                                       int amountOfMelFilters, float lowerFilterFreq){
 
@@ -41,17 +41,17 @@ public class MFCCExtractor implements FileProcessor{
             e.printStackTrace();
         }
 
-        return mfccResults;
+        return SetBuilder.toDoubleArray(mfccResults);
     }
 
-    public static float[] extractMFCC(String filePath){
+    public static double[] extractMFCC(String filePath){
         return extractMFCC(filePath, 1024,
                 0, 13,
                 13, 133.3334F);
     }
 
     @Override
-    public float[] processFile(String filePath) {
+    public double[] processFile(String filePath) {
         return extractMFCC(filePath);
     }
 }

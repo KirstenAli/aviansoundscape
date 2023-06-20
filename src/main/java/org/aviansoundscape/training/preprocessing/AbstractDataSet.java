@@ -29,19 +29,21 @@ public abstract class AbstractDataSet {
     }
 
     private double[] buildInputs(Row row){
-        return toDoubleArray(row.getPreInputs(), longestInput);
+        return standardizePreInputLength(row.getPreInputs(), longestInput);
     }
 
-    private static double[] toDoubleArray(float[] floatArray, int length) {
-        double[] doubleArray = new double[length];
+    public static double[] standardizePreInputLength(double[] preInput, int longestInput) {
 
-        var floatArrayLength = Math.min(floatArray.length, length);
+        if(preInput.length==longestInput)
+            return preInput;
 
-        for (int i = 0; i <floatArrayLength; i++){
-            doubleArray[i] = floatArray[i];
-        }
+        double[] standardizedPreInput = new double[longestInput];
 
-        return doubleArray;
+        var minLength = Math.min(preInput.length, longestInput);
+
+        System.arraycopy(preInput, 0, standardizedPreInput, 0, minLength);
+
+        return standardizedPreInput;
     }
 
     private int getMaxClass(){

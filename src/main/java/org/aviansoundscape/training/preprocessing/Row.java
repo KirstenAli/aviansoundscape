@@ -8,7 +8,7 @@ import lombok.Setter;
 public class Row {
 
     @Setter(AccessLevel.NONE)
-    private float[] preInputs;
+    private double[] preInputs;
 
     @Setter(AccessLevel.NONE)
     private int preInputLength;
@@ -19,7 +19,7 @@ public class Row {
 
     private int classNum;
 
-    public void setPreInputs(float[] preInputs) {
+    public void setPreInputs(double[] preInputs) {
         this.preInputs = preInputs;
         preInputLength = preInputs.length;
     }

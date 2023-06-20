@@ -1,4 +1,5 @@
 package org.aviansoundscape.training.preprocessing;
+
 import org.neuroph.core.data.DataSet;
 
 import java.io.File;
@@ -72,5 +73,14 @@ public class SetBuilder {
     private static int getClassNum(String fileName){
         var realFileName = fileName.split("\\.");
         return Integer.parseInt(realFileName[0]);
+    }
+
+    public static double[] toDoubleArray(float[] floatArray){
+        double[] doubleArray = new double[floatArray.length];
+
+        for (int i = 0; i < floatArray.length; i++)
+            doubleArray[i] = floatArray[i];
+
+        return doubleArray;
     }
 }

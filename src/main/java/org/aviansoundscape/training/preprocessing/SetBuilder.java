@@ -9,10 +9,35 @@ import java.io.File;
 @Getter @Setter
 public class SetBuilder {
 
-    private static void buildInitialSet(String directoryPath,
-                                     AbstractDataSet abstractDataSet,
-                                     FileProcessor fileProcessor){
+    public static DataSet buildTestSet(String directoryPath,
+                                       int longestInput,
+                                       FileProcessor fileProcessor) {
+        var testSet = new TestSet();
 
+        buildInitialSet(directoryPath, testSet, fileProcessor);
+
+        testSet.setLongestInput(longestInput);
+
+        testSet.build();
+
+        return buildSet(testSet, longestInput);
+    }
+
+    public static DataSet buildDataSet(String dataPath,
+                                       FileProcessor fileProcessor){
+        var initialDataSet = new TrainingSet();
+
+        buildInitialSet(dataPath, initialDataSet,
+                fileProcessor);
+
+        initialDataSet.build();
+
+        return buildSet(initialDataSet, initialDataSet.getLongestInput());
+    }
+
+    private static void buildInitialSet(String directoryPath,
+                                        AbstractDataSet abstractDataSet,
+                                        FileProcessor fileProcessor){
         var directory = new File(directoryPath);
         var fileNames = directory.list();
 
@@ -30,32 +55,6 @@ public class SetBuilder {
                 abstractDataSet.add(row);
             }
         }
-    }
-
-    public static DataSet buildTestSet(String directoryPath,
-                                        int longestInput,
-                                        FileProcessor fileProcessor) {
-        var testSet = new TestSet();
-
-        buildInitialSet(directoryPath, testSet, fileProcessor);
-
-        testSet.setLongestInput(longestInput);
-
-        testSet.build();
-
-        return buildSet(testSet, longestInput);
-    }
-
-    public static DataSet buildDataSet(String dataPath,
-                                        FileProcessor fileProcessor){
-        var initialDataSet = new TrainingSet();
-
-        buildInitialSet(dataPath, initialDataSet,
-                fileProcessor);
-
-        initialDataSet.build();
-
-        return buildSet(initialDataSet, initialDataSet.getLongestInput());
     }
 
     private static DataSet buildSet(AbstractDataSet abstractDataSet, int longestInput){

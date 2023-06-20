@@ -11,7 +11,7 @@ public class SetBuilder {
 
     public static DataSet buildTestSet(String directoryPath,
                                        int longestInput,
-                                       FileProcessor fileProcessor) {
+                                       FileProcessor fileProcessor){
         var testSet = new TestSet();
 
         buildInitialSet(directoryPath, testSet, fileProcessor);

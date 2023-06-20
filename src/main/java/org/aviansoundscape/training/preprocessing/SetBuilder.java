@@ -12,15 +12,15 @@ public class SetBuilder {
     public static DataSet buildTestSet(String directoryPath,
                                        int longestInput,
                                        FileProcessor fileProcessor){
-        var testSet = new TestSet();
+        var initialTestSet = new TestSet();
 
-        prepareInitialSet(directoryPath, testSet, fileProcessor);
+        prepareInitialSet(directoryPath, initialTestSet, fileProcessor);
 
-        testSet.setLongestInput(longestInput);
+        initialTestSet.setLongestInput(longestInput);
 
-        testSet.build();
+        initialTestSet.build();
 
-        return buildSet(testSet, longestInput);
+        return buildSet(initialTestSet, longestInput);
     }
 
     public static DataSet buildDataSet(String dataPath,

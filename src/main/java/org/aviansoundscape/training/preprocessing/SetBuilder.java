@@ -1,5 +1,4 @@
 package org.aviansoundscape.training.preprocessing;
-
 import org.neuroph.core.data.DataSet;
 
 import java.io.File;

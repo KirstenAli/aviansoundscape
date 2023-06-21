@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MyMFCC extends MFCC {
 
-    private final List<float[]> mfcc = new ArrayList<>();
+    private final List<float[]> mfccs = new ArrayList<>();
     public MyMFCC(int samplesPerFrame, int sampleRate) {
         super(samplesPerFrame, sampleRate);
     }
@@ -20,27 +20,29 @@ public class MyMFCC extends MFCC {
     @Override
     public boolean process(AudioEvent audioEvent) {
         var bool = super.process(audioEvent);
-        mfcc.add(super.getMFCC());
+        mfccs.add(super.getMFCC());
         return bool;
     }
 
-    @Override
-    public float[] getMFCC() {
-        return convertFloatListToArray(mfcc);
+    public double[] getMFCCs() {
+        return toDoubleArray(mfccs);
     }
 
-    private static float[] convertFloatListToArray(List<float[]> listOfArrays) {
+    private static double[] toDoubleArray(List<float[]> listOfArrays) {
         int totalLength = 0;
         for (float[] array : listOfArrays) {
             totalLength += array.length;
         }
 
-        float[] result = new float[totalLength];
-        int currentIndex = 0;
+        double[] result = new double[totalLength];
 
-        for (float[] array : listOfArrays) {
-            System.arraycopy(array, 0, result, currentIndex, array.length);
-            currentIndex += array.length;
+        for (int i=0; i<listOfArrays.size(); i++){
+
+            var floatArray = listOfArrays.get(i);
+
+            for (float v : floatArray) {
+                result[i] = v;
+            }
         }
 
         return result;

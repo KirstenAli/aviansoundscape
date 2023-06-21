@@ -3,7 +3,6 @@ package org.aviansoundscape.training.preprocessing;
 import be.tarsos.dsp.AudioDispatcher;
 import be.tarsos.dsp.io.TarsosDSPAudioInputStream;
 import be.tarsos.dsp.io.jvm.JVMAudioInputStream;
-import be.tarsos.dsp.mfcc.MFCC;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -15,7 +14,7 @@ public class MFCCExtractor implements FileProcessor{
                                       int bufferOverlap, int amountOfCepstrumCoef,
                                       int amountOfMelFilters, float lowerFilterFreq){
 
-        var mfccResults = new float[0];
+        var mfccResults = new double[0];
 
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath));
@@ -27,21 +26,21 @@ public class MFCCExtractor implements FileProcessor{
             var sampleRate = audioInputStream.getFormat().getSampleRate();
 
             // Compute MFCC features
-            MFCC mfcc = new MyMFCC(samplesPerFrame, (int) sampleRate,
+            MyMFCC myMFCC = new MyMFCC(samplesPerFrame, (int) sampleRate,
                     amountOfCepstrumCoef, amountOfMelFilters,
                     lowerFilterFreq, sampleRate / 2.0F);
 
-            dispatcher.addAudioProcessor(mfcc);
+            dispatcher.addAudioProcessor(myMFCC);
             // Process the audio file
             dispatcher.run();
-            mfccResults = mfcc.getMFCC();
+            mfccResults = myMFCC.getMFCCs();
         }
 
         catch (UnsupportedAudioFileException | IOException e){
             e.printStackTrace();
         }
 
-        return SetBuilder.toDoubleArray(mfccResults);
+        return mfccResults;
     }
 
     public static double[] extractMFCC(String filePath){

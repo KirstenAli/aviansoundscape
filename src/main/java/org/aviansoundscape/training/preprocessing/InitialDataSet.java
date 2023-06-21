@@ -33,6 +33,9 @@ public class InitialDataSet {
 
     public static double[] normalizeArrayLength(double[] preInput, int length){
 
+        if (length==0)
+            throw new RuntimeException("Input length not set");
+
         if(preInput.length==length)
             return preInput;
 

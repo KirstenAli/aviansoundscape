@@ -18,7 +18,7 @@ public class Train{
 
         var trainedNetwork = train(functionType, hiddenNeurons, dataSet);
 
-        var testDataSet = SetBuilder.buildTestSet(testDataPath,
+        var testDataSet = SetBuilder.buildDataSet(testDataPath,
                 dataSet.getInputSize(), mfccExtractor);
 
         testNeuralNetwork(trainedNetwork, testDataSet);

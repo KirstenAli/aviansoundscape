@@ -7,15 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
-public abstract class AbstractDataSet {
+public class InitialDataSet {
     private final List<Row> rows;
     private int longestInput;
 
-    public AbstractDataSet() {
+    public InitialDataSet() {
         rows = new ArrayList<>();
     }
 
-    abstract void add(Row row);
+    public void add(Row row){
+        rows.add(row);
+    }
     public void build(){
         var maxClass = getMaxClass();
 

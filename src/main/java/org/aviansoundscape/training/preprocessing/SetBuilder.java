@@ -6,10 +6,10 @@ import java.io.File;
 
 public class SetBuilder{
 
-    public static DataSet buildTestSet(String directoryPath,
+    public static DataSet buildDataSet(String directoryPath,
                                        int longestInput,
                                        FileProcessor fileProcessor){
-        var initialTestSet = new TestSet();
+        var initialTestSet = new InitialDataSet();
 
         prepareInitialSet(directoryPath, initialTestSet, fileProcessor);
 
@@ -32,7 +32,7 @@ public class SetBuilder{
     }
 
     private static void prepareInitialSet(String directoryPath,
-                                          AbstractDataSet abstractDataSet,
+                                          InitialDataSet initialDataSet,
                                           FileProcessor fileProcessor){
 
         var directory = new File(directoryPath);
@@ -49,25 +49,25 @@ public class SetBuilder{
                 var className = getClassNum(fileName);
                 row.setClassNum(className);
 
-                abstractDataSet.add(row);
+                initialDataSet.add(row);
             }
         }
     }
 
-    private static DataSet buildSet(AbstractDataSet abstractDataSet, int longestInput){
-        var outputSize = getOutputSize(abstractDataSet);
+    private static DataSet buildSet(InitialDataSet initialDataSet, int longestInput){
+        var outputSize = getOutputSize(initialDataSet);
 
         DataSet dataSet = new DataSet(longestInput, outputSize);
 
-        for(Row row: abstractDataSet.getRows()){
+        for(Row row: initialDataSet.getRows()){
             dataSet.add(row.getInputs(), row.getOutputs());
         }
 
         return dataSet;
     }
 
-    private static int getOutputSize(AbstractDataSet abstractDataSet){
-        return abstractDataSet.getRows().get(0).getOutputs().length;
+    private static int getOutputSize(InitialDataSet initialDataSet){
+        return initialDataSet.getRows().get(0).getOutputs().length;
     }
 
     private static int getClassNum(String fileName){

@@ -1,6 +1,6 @@
 package org.aviansoundscape.training.preprocessing;
 
-public class TrainingSet extends AbstractDataSet{
+public class TrainingSet extends InitialDataSet {
 
     @Override
     public void add(Row row){

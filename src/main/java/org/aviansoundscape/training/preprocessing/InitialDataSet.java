@@ -23,16 +23,12 @@ public class InitialDataSet {
         var maxClass = getMaxClass();
 
         for(Row row: rows){
-            var input = buildInputs(row);
+            var input = normalizeArrayLength(row.getPreInputs(), inputLength);
             var output = buildOutputArray(row, maxClass);
 
             row.setInputs(input);
             row.setOutputs(output);
         }
-    }
-
-    private double[] buildInputs(Row row){
-        return normalizeArrayLength(row.getPreInputs(), inputLength);
     }
 
     public static double[] normalizeArrayLength(double[] preInput, int length){

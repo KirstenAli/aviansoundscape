@@ -31,10 +31,10 @@ public class InitialDataSet {
     }
 
     private double[] buildInputs(Row row){
-        return standardizePreInputLength(row.getPreInputs(), longestInput);
+        return normalizeArrayLength(row.getPreInputs(), longestInput);
     }
 
-    public static double[] standardizePreInputLength(double[] preInput, int standardLength){
+    public static double[] normalizeArrayLength(double[] preInput, int standardLength){
 
         if(preInput.length==standardLength)
             return preInput;

@@ -34,7 +34,7 @@ public class InitialDataSet {
         return standardizePreInputLength(row.getPreInputs(), longestInput);
     }
 
-    public static double[] standardizePreInputLength(double[] preInput, int longestInput) {
+    public static double[] standardizePreInputLength(double[] preInput, int longestInput){
 
         if(preInput.length==longestInput)
             return preInput;
@@ -49,7 +49,7 @@ public class InitialDataSet {
     }
 
     private int getMaxClass(){
-        var maxClass=0;
+        var maxClass=rows.get(0).getClassNum();
 
         for (Row row: rows){
             if(row.getClassNum()>maxClass)

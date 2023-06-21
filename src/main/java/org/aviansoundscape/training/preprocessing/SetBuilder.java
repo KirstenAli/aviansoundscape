@@ -13,7 +13,7 @@ public class SetBuilder{
 
         prepareInitialSet(directoryPath, initialTestSet, fileProcessor);
 
-        initialTestSet.setLongestInput(longestInput);
+        initialTestSet.setInputLength(longestInput);
 
         initialTestSet.build();
 
@@ -28,7 +28,7 @@ public class SetBuilder{
 
         initialDataSet.build();
 
-        return buildSet(initialDataSet, initialDataSet.getLongestInput());
+        return buildSet(initialDataSet, initialDataSet.getInputLength());
     }
 
     private static void prepareInitialSet(String directoryPath,

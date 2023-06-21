@@ -9,7 +9,7 @@ import java.util.List;
 @Getter @Setter
 public class InitialDataSet {
     private final List<Row> rows;
-    private int longestInput;
+    private int inputLength;
 
     public InitialDataSet() {
         rows = new ArrayList<>();
@@ -18,6 +18,7 @@ public class InitialDataSet {
     public void add(Row row){
         rows.add(row);
     }
+
     public void build(){
         var maxClass = getMaxClass();
 
@@ -31,21 +32,21 @@ public class InitialDataSet {
     }
 
     private double[] buildInputs(Row row){
-        return normalizeArrayLength(row.getPreInputs(), longestInput);
+        return normalizeArrayLength(row.getPreInputs(), inputLength);
     }
 
-    public static double[] normalizeArrayLength(double[] preInput, int standardLength){
+    public static double[] normalizeArrayLength(double[] preInput, int length){
 
-        if(preInput.length==standardLength)
+        if(preInput.length==length)
             return preInput;
 
-        double[] standardizedPreInput = new double[standardLength];
+        double[] result = new double[length];
 
-        var minLength = Math.min(preInput.length, standardLength);
+        var minLength = Math.min(preInput.length, length);
 
-        System.arraycopy(preInput, 0, standardizedPreInput, 0, minLength);
+        System.arraycopy(preInput, 0, result, 0, minLength);
 
-        return standardizedPreInput;
+        return result;
     }
 
     private int getMaxClass(){

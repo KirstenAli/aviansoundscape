@@ -34,14 +34,14 @@ public class InitialDataSet {
         return standardizePreInputLength(row.getPreInputs(), longestInput);
     }
 
-    public static double[] standardizePreInputLength(double[] preInput, int longestInput){
+    public static double[] standardizePreInputLength(double[] preInput, int standardLength){
 
-        if(preInput.length==longestInput)
+        if(preInput.length==standardLength)
             return preInput;
 
-        double[] standardizedPreInput = new double[longestInput];
+        double[] standardizedPreInput = new double[standardLength];
 
-        var minLength = Math.min(preInput.length, longestInput);
+        var minLength = Math.min(preInput.length, standardLength);
 
         System.arraycopy(preInput, 0, standardizedPreInput, 0, minLength);
 
@@ -49,7 +49,7 @@ public class InitialDataSet {
     }
 
     private int getMaxClass(){
-        var maxClass=rows.get(0).getClassNum();
+        var maxClass=Integer.MIN_VALUE;
 
         for (Row row: rows){
             if(row.getClassNum()>maxClass)

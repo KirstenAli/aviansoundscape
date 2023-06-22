@@ -13,7 +13,7 @@ public class ImageProcessor implements FileProcessor{
         return new double[0]; //TODO
     }
 
-    public BufferedImage resizeImage(BufferedImage originalImage, int targetWidth) throws Exception {
+    public BufferedImage resizeImage(BufferedImage originalImage, int targetWidth) {
         return Scalr.resize(originalImage, targetWidth);
     }
 
@@ -58,6 +58,4 @@ public class ImageProcessor implements FileProcessor{
 
         return image;
     }
-
-
 }

@@ -9,15 +9,15 @@ import java.io.IOException;
 
 public class ImageProcessor implements FileProcessor{
     @Override
-    public double[] processFile(String filePath) {
+    public double[] processFile(String filePath){
         return new double[0]; //TODO
     }
 
-    public BufferedImage resizeImage(BufferedImage originalImage, int targetWidth) {
+    public BufferedImage resizeImage(BufferedImage originalImage, int targetWidth){
         return Scalr.resize(originalImage, targetWidth);
     }
 
-    public static double[] getPixelArray(BufferedImage image) {
+    public static double[] getPixelArray(BufferedImage image){
         int width = image.getWidth();
         int height = image.getHeight();
 

@@ -38,9 +38,9 @@ public class ImageProcessor implements FileProcessor{
                 double normalizedBlue = blue / 255.0;
 
                 pixelArray[index] = normalizedRed;
-                pixelArray[index++] = normalizedGreen;
-                pixelArray[index++] = normalizedBlue;
-                index ++;
+                pixelArray[++index] = normalizedGreen;
+                pixelArray[++index] = normalizedBlue;
+                index++;
             }
         }
 

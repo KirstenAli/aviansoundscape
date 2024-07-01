@@ -1,2 +1,2 @@
 # aviansoundscape
-AvianSoundscape: Bird Sound Identification and Location Reporting System. 
+AvianSoundscape: Identify Bird Species by their Chirping
